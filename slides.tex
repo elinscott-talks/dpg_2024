@@ -8,6 +8,7 @@
 % \usepackage[backend=bibtex,style=authoryear-comp,citestyle=authoryear-comp,firstinits=true,sorting=none,maxnames=1,doi=false,isbn=false,url=false,eprint=false]{biblatex}
 \usepackage[T1]{fontenc}
 \usepackage[normalem]{ulem}
+\usepackage{pifont}
 
 \definecolor{twitter_blue}{HTML}{1da1f2}
 \input{seaborn_colours.tex}
@@ -363,31 +364,31 @@
 
    \begin{columns}
       \begin{column}{0.5\textwidth}
-      \begin{description}[<+(1)->]
-         \item[DFT] qualitative failures
-         \item[GW] accurate but expensive, ill-behaved, and not a functional
-         \item[Koopmans functionals] accurate band structures within a functional theory
-      \end{description}
-      \onslide<5->{
-      \vspace{1ex}
-      \footnotesize
-      \begin{tabular}{c S[table-format = 2.2] S[table-format = 2.2] >{\color{seaborn_red}\bfseries}S[table-format = 2.2] >{\color{seaborn_red}\bfseries}S[table-format = 2.2] S[table-format = 2.2]}
-                          & {PBE} & {G\textsubscript{0}W\textsubscript{0}} & {KI} & {KIPZ} & {QSG$\tilde{\mathsf{W}}$} \\
-         \midrule
-         \midrule
-         $E_\mathsf{gap}$ & 2.54  & 0.56                                   & 0.27 & 0.22   & 0.18                      \\
-         %                                  & {MAPE (\%)} & 48.28 & 12.10      & 7.0           \\
-         \midrule
-         IP               & 1.09  & 0.39                                   & 0.19 & 0.21   & 0.49                      \\
-         %                                  & {MAPE (\%)} & 15.58 & 5.71                                   & 2.99 & 3.14   & 7.41
-      \end{tabular}
+         \begin{description}[<+(1)->]
+            \item[DFT] qualitative failures
+            \item[GW] accurate but expensive, ill-behaved, and not a functional
+            \item[Koopmans functionals] accurate band structures within a functional theory
+         \end{description}
+         \onslide<5->{
+            \vspace{1ex}
+            \footnotesize
+            \begin{tabular}{c S[table-format = 2.2] S[table-format = 2.2] >{\color{seaborn_red}\bfseries}S[table-format = 2.2] >{\color{seaborn_red}\bfseries}S[table-format = 2.2] S[table-format = 2.2]}
+                                & {PBE} & {G\textsubscript{0}W\textsubscript{0}} & {KI} & {KIPZ} & {QSG$\tilde{\mathsf{W}}$} \\
+               \midrule
+               \midrule
+               $E_\mathsf{gap}$ & 2.54  & 0.56                                   & 0.27 & 0.22   & 0.18                      \\
+               %                                  & {MAPE (\%)} & 48.28 & 12.10      & 7.0           \\
+               \midrule
+               IP               & 1.09  & 0.39                                   & 0.19 & 0.21   & 0.49                      \\
+               %                                  & {MAPE (\%)} & 15.58 & 5.71                                   & 2.99 & 3.14   & 7.41
+            \end{tabular}
 
-      }
+         }
       \end{column}
       \begin{column}{0.5\textwidth}
          \begin{center}
             \onslide<4->{
-            \includegraphics[width=0.8\textwidth]{figures/fig_nguyen_prx_bandgaps.png}
+               \includegraphics[width=0.8\textwidth]{figures/fig_nguyen_prx_bandgaps.png}
             }
          \end{center}
       \end{column}
@@ -395,8 +396,6 @@
    \blfootcite{Nguyen2018}
 
 \end{frame}
-
-
 
 \begin{frame}{Features of Koopmans functionals}
    \begin{align*}
@@ -406,9 +405,9 @@
       {\alpha_i}
       \Biggl(
       -
-         {\int^{f_i}_{0} \varepsilon_i(f) df}
+      {\int^{f_i}_{0} \varepsilon_i(f) df}
       +
-         {f_i {\eta_i}}
+      {f_i {\eta_i}}
       \Biggr)
    \end{align*}
    General features:
@@ -418,28 +417,32 @@
       \item relies on localization
       \item requires the ab initio calculation of screening parameters
    \end{itemize}
-   
+
+   \onslide<5->{
+      In order to evaluate this functional, one must...
+   }
+   \begin{itemize}[<+(6)->]
+      \item initialize a set of variational orbitals
+      \item calculate the screening parameters $\{\alpha_i\}$
+      \item construct and diagonalize the Hamiltonian
+   \end{itemize}
+
 \end{frame}
 
-\begin{frame}{What should go in the box?}
+\begin{frame}{What needs to be in the box?}
 
    \begin{columns}
       \begin{column}{0.5\textwidth}
-         In order to evaluate this functional, one must...
-         \begin{itemize}[<+(1)->]
-            \item initialize a set of variational orbitals
-            \item calculate the screening parameters $\{\alpha_i\}$
-            \item construct and diagonalize the Hamiltonian
-         \end{itemize}
-
-         \onslide<6->{For a black box, we need...}
-         \begin{itemize}[<+(7)->]
-            \item automated start-to-finish calculations
-            \item minimal human input
-         \end{itemize}
+         \includegraphics[width=\columnwidth]{figures/black_box_filled_square.png}
       \end{column}
       \begin{column}{0.5\textwidth}
-         \onslide<5->{\includegraphics[width=\columnwidth]{figures/black_box_filled_square.png}}
+         For a black box, we need...
+
+         \vspace{1ex}
+         \onslide<2->{\ $\square$ automated start-to-finish calculations}
+
+         \vspace{1ex}
+         \onslide<3->{\ $\square$ minimal input required from the user}
       \end{column}
    \end{columns}
 \end{frame}
@@ -477,7 +480,301 @@
    \footnotetext[1]{\cite{Linscott2023}}
    \footnotetext[2]{\cite{Larsen2017}}
 \end{frame}
+
+\begin{frame}{}
+   \includegraphics[width=\textwidth]{figures/jctc.png}
+\end{frame}
+
+\begin{frame}{What needs to be in the box?}
+
+   \begin{columns}
+      \begin{column}{0.5\textwidth}
+         \includegraphics[width=\columnwidth]{figures/black_box_filled_square.png}
+      \end{column}
+      \begin{column}{0.5\textwidth}
+         For a black box, we need...
+
+         \vspace{1ex}
+         \
+         \only<1>{$\square$}%
+         \only<2->{%
+            \rlap{$\square$}{\raisebox{2pt}{\large\hspace{1pt}\ding{51}}}%
+            \hspace{-2.5pt}}
+         automated start-to-finish calculations
+
+         \vspace{1ex}
+         \ $\square$ minimal input required from the user
+      \end{column}
+   \end{columns}
+\end{frame}
 % 
+\begin{frame}{Automating Wannierization}
+
+   \begin{columns}
+      \begin{column}{0.5\textwidth}
+         \begin{overlayarea}{\columnwidth}{0.6\paperheight}
+         \begin{center}
+            \only<1-3>{\includegraphics[height=0.6\paperheight]{figures/proj_disentanglement_fig1a.png}}
+            \only<4>{\includegraphics[width=\columnwidth]{figures/target_manifolds_fig1b.png}}
+         \end{center}
+         \end{overlayarea}
+      \end{column}
+      \begin{column}{0.5\textwidth}
+         Can we automate the Wannierization?
+
+         \begin{itemize}[<+(1)->]
+            \item PAOs from the pseudopotentials as the initial guess for the projectors
+            \item projectability-based disentanglement instead of energy-based disentanglement
+            \item a parallel transport algorithm is used to separate the occupied and empty manifolds
+         \end{itemize}
+      \end{column}
+   \end{columns}
+   % \begin{figure}[t]
+   %    \begin{subfigure}{0.2\textwidth}
+   %       \onslide<2->{
+   %       \includegraphics[height=1.5\columnwidth]{figures/proj_disentanglement_fig1b.png}
+   %       \vspace{-0.01\paperheight}
+   %       }
+   %    \end{subfigure}
+   %    \begin{subfigure}{0.2\textwidth}
+   %       \onslide<3->{
+   %       \includegraphics[height=1.5\columnwidth]{figures/proj_disentanglement_fig1a.png}
+   %       }
+   %    \end{subfigure}
+   %    \hspace{0.025\textwidth}
+   %    % \begin{subfigure}{0.225\textwidth}
+   %    %    \onslide<3->{
+   %    %    \includegraphics[height=1.5\columnwidth]{figures/proj_disentanglement_fig1d.png}
+   %    %    }
+   %    % \end{subfigure}
+   %    \begin{subfigure}{0.2\textwidth}
+   %       \onslide<4->{
+   %       \includegraphics[height=1.5\columnwidth]{figures/proj_disentanglement_fig1f.png}
+   %       }
+   %    \end{subfigure}
+   % \end{figure}
+
+   \blfootcite{Qiao2023,Qiao2023a}
+
+\end{frame}
+
+\begin{frame}{Automating Wannierization}
+   \begin{columns}
+      \begin{column}{0.6\textwidth}
+         \inputminted[fontsize=\scriptsize]{json}{scripts/si.json}
+      \end{column}
+      % \hbox{
+      %    \raisebox{0.15\textwidth}{\huge $\rightarrow$}
+      % }
+      \begin{column}{0.4\textwidth}
+         \onslide<2->{
+         \includegraphics[width=\columnwidth]{figures/vconf_tests/Si/confined_projectors/10_2.0_2.0/51688_wannierization_wannierize_bandstructure.png}
+         }
+      \end{column}
+   \end{columns}
+\end{frame}
+
+\begin{frame}{Automating Wannierization}
+
+   Note that pseudoatomic orbitals play a dual purpose
+   \begin{itemize}
+      \item we use them to calculate projectability
+      \item they serve as our initial guesses for the Wannier functions \onslide<2->{$\rightarrow$ the number of Wannier functions is limited to the number of pseudoatomic orbitals}
+   \end{itemize}
+
+   \onslide<3->{This is a problem for some systems e.g. LiF}
+
+   \onslide<4->{
+
+      \begin{center}
+         \begin{tabular}[h]{cccc}
+            element         & electronic configuration                                                                                              & {PAOs}                                                              & {number of PAOs} \\
+            \hline
+            Li              & 1s\textsuperscript{2} 2s\textsuperscript{1}                                                                           & {1s, 2s}                                                            & {2}              \\
+            {F} & {\textcolor{seaborn_bg_grey_darker}{[1s\textsuperscript{2}]} 2s\textsuperscript{2} 2p\textsuperscript{5}} & {2s, 2p\textsubscript{x}, 2p\textsubscript{y}, 2p\textsubscript{z}} & {4}
+         \end{tabular}
+      \end{center}
+   }
+
+   \vspace{1ex}
+   \onslide<5->{6 Wannier functions for a system with 5 occupied bands}
+
+   \vspace{1ex}
+   \onslide<6->{If we want more Wannier functions, we're gonna need \sout{a bigger boat} more PAOs...}
+
+\end{frame}
+
+\begin{frame}{Automating Wannierization}
+
+   For cases such as LiF, we\dots
+   
+   re-solve the radial Schrödinger equation for additional pseudoatomic orbitals. A fictious confining potential is required to localise the empty 
+
+   Note that this does not add complexity to the user as it only needs to be performed once per pseudopotential
+
+\end{frame}
+
+% \begin{frame}{Automating Wannierization}
+%    Existing strategy: use the PAOs provided by OpenMX
+% 
+%    \includegraphics[width=0.45\textwidth]{figures/Li8.0.pao_2_2_1_0.png}
+%    \includegraphics[width=0.45\textwidth]{figures/Li8.0.pao_10_0_0_0.png}
+% 
+% \end{frame}
+
+
+% \begin{frame}{Silicon}
+%    \begin{center}
+%       \includegraphics[width=0.6\textwidth]{figures/vconf_tests/Si/projectability.png}
+%    \end{center}
+% \end{frame}
+% 
+% \begin{frame}{Silicon}
+%    \begin{center}
+%       \includegraphics[width=0.6\textwidth]{figures/vconf_tests/Si/projectability_scores_and_nsteps.png}
+%    \end{center}
+% \end{frame}
+% \begin{frame}{LiF}
+%    \begin{center}
+%       \includegraphics[width=0.6\textwidth]{figures/vconf_tests/LiF/projectability.png}
+%    \end{center}
+% \end{frame}
+% 
+% \begin{frame}{LiF}
+%    \begin{center}
+%       \includegraphics[width=0.9\textwidth]{figures/vconf_tests/LiF/projectability_scores_nsteps_and_metric.png}
+%    \end{center}
+% \end{frame}
+% 
+% \begin{frame}{Si}
+%    \begin{center}
+%       \hbox{
+%          \includegraphics[width=0.45\textwidth]{figures/vconf_tests/LiF/default/62361_wannierization_wannierize_bandstructure.png}
+%          \raisebox{0.15\textwidth}{\huge $\rightarrow$}
+%          \includegraphics[width=0.45\textwidth]{figures/vconf_tests/LiF/confined_projectors/Li_only/62361_wannierization_wannierize_bandstructure.png}
+%       }
+%    \end{center}
+% \end{frame}
+% 
+% \begin{frame}{Next steps...}
+%    \begin{itemize}[<+(1)->]
+%       \item decide on a criteria for choosing the confining potential parameters (depth, width, and smoothness)
+%       \item if the parameters are system-independent, publish a periodic table of PAOs
+%       \item tidy and publish modified \texttt{oncvpsp.x}
+%       \item finally do some Koopmans calculations! (Would need a good criteria for which elements to extend)
+%    \end{itemize}
+% 
+%    \onslide<6->{Nice to have but not essential:}
+%    \begin{itemize}[<+(2)->]
+%       \item investigate/resolve bad Wannier90 convergence
+%       \item the option to use external projectors in \texttt{projwfc.x}
+%    \end{itemize}
+% 
+% \end{frame}
+% 
+% \begin{frame}{\footnotesize Maybe the real treasure is the python packages we made along the way}
+% 
+%    \hbox{
+%       \includegraphics[width=0.5\textwidth]{figures/upf-tools.png}
+%       \includegraphics[width=0.5\textwidth]{figures/oncvpsp-tools.png}
+%    }
+% \end{frame}
+% 
+% \begin{frame}{\footnotesize Maybe the real treasure is the python packages we made along the way}
+% 
+%    Publish your code!
+%    \begin{itemize}
+%       \item It's easy: most of the infrastructure was from the \texttt{cookiecutter} I used (see my July 2022 GM)
+%       \item It avoids duplication: \texttt{upf-tools} was discovered by Marnik and is now used in \texttt{AiiDA}
+%    \end{itemize}
+% 
+% \end{frame}
+\begin{frame}{Take home messsages}
+
+   \begin{columns}
+      \begin{column}{0.5\textwidth}
+         \includegraphics[width=\columnwidth]{figures/black_box_filled_square.png}
+      \end{column}
+      \begin{column}{0.5\textwidth}
+         For a black box, we need...
+
+         \vspace{1ex}
+         \
+         \rlap{$\square$}{\raisebox{2pt}{\large\hspace{1pt}\ding{51}}}%
+         \hspace{-2.5pt}
+         automated start-to-finish calculations
+
+         \vspace{1ex}
+         \ \only<1>{$\square$}%
+         \only<2->{%
+            \rlap{$\square$}{\raisebox{2pt}{\large\hspace{1pt}\ding{51}}}%
+            \hspace{-2.5pt}}
+         minimal input required from the user
+      \end{column}
+   \end{columns}
+\end{frame}
+
+\begingroup
+\setbeamertemplate{footline}{}
+\begin{frame}{Acknowledgements}
+   \begin{center}
+      \footnotesize
+      \begin{tabularx}{0.7\textwidth}{CCC}
+         \includegraphics[height = 0.3\paperheight]{figures/nicola_marzari.jpg}  &
+         \includegraphics[height = 0.3\paperheight]{figures/nicola_colonna2.png} &
+         \includegraphics[height = 0.3\paperheight]{photos/junfeng.jpeg} \\
+         % \includegraphics[height = 0.2\paperheight]{figures/daniel_cole.jpeg}       &
+         % \includegraphics[height = 0.2\paperheight]{figures/mike_payne.jpeg}        &
+         % \includegraphics[height = 0.2\paperheight]{figures/david_oregan.jpg}         \\
+         Nicola Marzari                                                          &
+         Nicola Colonna                                                          &
+         Junfeng Qiao
+      \end{tabularx}
+   \end{center}
+
+   \vspace{2ex}
+
+   \begin{center}
+      \includegraphics[height = 0.15\paperheight]{logos/SNF_logo_standard_print_color_pos_e.eps}
+      \hspace{3em}
+      \includegraphics[height = 0.15\paperheight]{figures/marvel_trimmed.png}
+   \end{center}
+
+   \vspace{1ex}
+
+   \begin{center}
+      Want to find out more? Go to \url{koopmans-functionals.org}
+
+      \vspace{1em}
+      Follow \includegraphics[height=\fontcharht\font`\B]{figures/Twitter_Bird.png} \textcolor{twitter_blue}{@ed\_linscott} for updates | Slides available at \includegraphics[height=\fontcharht\font`\B]{logos/github-favicon.png} github/elinscott
+   \end{center}
+
+   % \begin{multicols}{2}
+   %    \tiny
+   %    \printbibliography
+   %    \normalsize
+   % \end{multicols}
+   \vspace{2ex}
+   \scriptsize
+
+   \setbeamercolor*{bibliography entry title}{fg=black}
+   \setbeamercolor*{bibliography entry author}{fg=black}
+   \setbeamercolor*{bibliography entry location}{fg=black}
+   \setbeamercolor*{bibliography entry note}{fg=black}
+
+   \vspace{2ex}
+   \scriptsize
+\end{frame}
+\endgroup
+\backupbegin
+\begin{frame}{}
+
+   \begin{center}
+      \huge SPARE SLIDES
+   \end{center}
+
+\end{frame}
+
 \begin{frame}{Workflows}
    \onslide<2->{
       (a) finite difference calculations using a supercell
@@ -501,319 +798,62 @@
 
 \end{frame}
 
-\begin{frame}{Workflows}
+% \begin{frame}{Workflows}
+% 
+%    What still stands in our way? Take the example of silicon:
+% 
+%    \onslide<2->{
+%       \vspace{-1ex}
+%       \inputminted[fontsize=\scriptsize]{json}{scripts/si.json}
+%    }
+% 
+% \end{frame}
 
-   What still stands in our way? Take the example of silicon:
-
-   \onslide<2->{
-      \vspace{-1ex}
-      \inputminted[fontsize=\scriptsize]{json}{scripts/si.json}
-   }
-
-\end{frame}
-
-\begin{frame}{Automating Wannierization}
-
-   One very manual step: Wannierization. Can we automate this?
-
-   \begin{figure}[t]
-      \begin{subfigure}{0.2\textwidth}
-         \onslide<2->{
-         \includegraphics[height=1.5\columnwidth]{figures/proj_disentanglement_fig1b.png}
-         \vspace{-0.01\paperheight}
-         }
-      \end{subfigure}
-      \begin{subfigure}{0.2\textwidth}
-         \onslide<3->{
-         \includegraphics[height=1.5\columnwidth]{figures/proj_disentanglement_fig1a.png}
-         }
-      \end{subfigure}
-      \hspace{0.025\textwidth}
-      % \begin{subfigure}{0.225\textwidth}
-      %    \onslide<3->{
-      %    \includegraphics[height=1.5\columnwidth]{figures/proj_disentanglement_fig1d.png}
-      %    }
-      % \end{subfigure}
-      \begin{subfigure}{0.2\textwidth}
-         \onslide<4->{
-         \includegraphics[height=1.5\columnwidth]{figures/proj_disentanglement_fig1f.png}
-         }
-      \end{subfigure}
-   \end{figure}
-
-   \blfootcite{Qiao2023}
-
-\end{frame}
-
-\begin{frame}{Automating Wannierization}
-   Aside: we must additionally use a parallel transport algorithm to separate the occupied and empty manifolds
-
-      \begin{figure}
-         \includegraphics[width=0.3\columnwidth]{figures/target_manifolds_fig1b.png}
-      \end{figure}
-
-   \blfootcite{Qiao2023a}
-
-\end{frame}
-
-\begin{frame}{Automating Wannierization}
-
-   Pseudoatomic orbitals play a dual purpose
-   \begin{itemize}
-      \item we use them to calculate projectability \onslide<2->{$\rightarrow$ we rely on the PAOs having high overlap with the atomic-like bands}
-      \item they serve as our initial guesses for the Wannier functions \onslide<3->{$\rightarrow$ the number of Wannier functions is limited to the number of pseudoatomic orbitals}
-   \end{itemize}
-
-   \onslide<4->{e.g. LiF}
-
-   \onslide<5->{
-
-   \begin{center}
-      \begin{tabular}[h]{cccc}
-         element & electronic configuration & \onslide<6->{PAOs} & \onslide<7->{number of PAOs} \\
-         \hline
-         Li      & 1s\textsuperscript{2} 2s\textsuperscript{1} & \onslide<6->{1s, 2s} & \onslide<7->{2} \\
-         \onslide<8->{F}       & \onslide<8->{\textcolor{seaborn_bg_grey_darker}{[1s\textsuperscript{2}]} 2s\textsuperscript{2} 2p\textsuperscript{5}} & \onslide<9->{2s, 2p\textsubscript{x}, 2p\textsubscript{y}, 2p\textsubscript{z}} & \onslide<9->{4}
-      \end{tabular}
-   \end{center}
-   }
-
-   \vspace{1ex}
-   \onslide<10->{6 Wannier functions for a system with 10 electrons} \onslide<11->{= 5 occupied bands + only 1 unoccupied band!}
-
-   \vspace{1ex}
-   \onslide<12->{If we want more Wannier functions, we're gonna need \sout{a bigger boat} more PAOs...}
-
-\end{frame}
-
-\begin{frame}{Automating Wannierization}
-    Existing strategy: use the PAOs provided by OpenMX
-
-    \includegraphics[width=0.45\textwidth]{figures/Li8.0.pao_2_2_1_0.png}
-    \includegraphics[width=0.45\textwidth]{figures/Li8.0.pao_10_0_0_0.png}
-
-\end{frame}
-
-\begin{frame}{Criteria for ideal projectors}
-
-   The projectability is
-   \begin{equation*}
-      p_{m\mathbf{k}} = \sum_n |\langle \varphi_n \mid \psi_{m\mathbf{k}}\rangle |^2
-   \end{equation*}
-
-   We want a set of projectors such that\dots
-   \begin{itemize}
-      \item they should have a large overlap with some Kohn-Sham states and a small overlap with all the others% i.e. $p_{m\mathbf{k}}$ should be close to 0 or 1 for all $m$ and $\mathbf{k}$
-      \item they should lie within the span of the Kohn-Sham states% i.e. $\sum_{m\mathbf{k}} p_{m\mathbf{k}}$ should be as large as possible
-   \end{itemize}
-
-   We can meet these criteria if we maximise the functional
-   \begin{equation*}
-      F[\{\varphi_n\}] = \frac{1}{N_\mathbf{k} N_w} \sum_{\mathbf{k}} \sum_{m \in \mathcal{S}_\mathbf{k}} p_{m\mathbf{k}}
-   \end{equation*}
-
-   where $\mathcal{S}_\mathbf{k}$ corresponds to the $N_w$-largest values of $p_{m\mathbf{k}}$.
-\end{frame}
-
-\begin{frame}{Silicon}
-   \begin{center}
-   \includegraphics[width=0.6\textwidth]{figures/vconf_tests/Si/projectability.png}
-   \end{center}
-\end{frame}
-
-\begin{frame}{Silicon}
-   \begin{center}
-   \includegraphics[width=0.6\textwidth]{figures/vconf_tests/Si/projectability_scores_and_nsteps.png}
-   \end{center}
-\end{frame}
-
-\begin{frame}{Silicon}
-   \begin{center}
-   \hbox{
-   \includegraphics[width=0.45\textwidth]{figures/vconf_tests/Si/default/51688_wannierization_wannierize_bandstructure.png}
-   \raisebox{0.15\textwidth}{\huge $\rightarrow$}
-   \includegraphics[width=0.45\textwidth]{figures/vconf_tests/Si/confined_projectors/10_2.0_2.0/51688_wannierization_wannierize_bandstructure.png}
-   }
-   \end{center}
-\end{frame}
-
-\begin{frame}{LiF}
-   \begin{center}
-   \includegraphics[width=0.6\textwidth]{figures/vconf_tests/LiF/projectability.png}
-   \end{center}
-\end{frame}
-
-\begin{frame}{LiF}
-   \begin{center}
-   \includegraphics[width=0.9\textwidth]{figures/vconf_tests/LiF/projectability_scores_nsteps_and_metric.png}
-   \end{center}
-\end{frame}
-
-\begin{frame}{Si}
-   \begin{center}
-      \hbox{
-      \includegraphics[width=0.45\textwidth]{figures/vconf_tests/LiF/default/62361_wannierization_wannierize_bandstructure.png}
-      \raisebox{0.15\textwidth}{\huge $\rightarrow$}
-      \includegraphics[width=0.45\textwidth]{figures/vconf_tests/LiF/confined_projectors/Li_only/62361_wannierization_wannierize_bandstructure.png}
-      }
-   \end{center}
-\end{frame}
-
-\begin{frame}{Next steps...}
-   \begin{itemize}[<+(1)->]
-      \item decide on a criteria for choosing the confining potential parameters (depth, width, and smoothness)
-      \item if the parameters are system-independent, publish a periodic table of PAOs
-      \item tidy and publish modified \texttt{oncvpsp.x}
-      \item finally do some Koopmans calculations! (Would need a good criteria for which elements to extend)
-   \end{itemize}
-
-   \onslide<6->{Nice to have but not essential:}
-   \begin{itemize}[<+(2)->]
-      \item investigate/resolve bad Wannier90 convergence
-      \item the option to use external projectors in \texttt{projwfc.x}
-   \end{itemize}
-   
-\end{frame}
-
-\begin{frame}{\footnotesize Maybe the real treasure is the python packages we made along the way}
-
-   \hbox{
-    \includegraphics[width=0.5\textwidth]{figures/upf-tools.png}
-    \includegraphics[width=0.5\textwidth]{figures/oncvpsp-tools.png}
-   }
-\end{frame}
-
-\begin{frame}{\footnotesize Maybe the real treasure is the python packages we made along the way}
-
-    Publish your code!
-    \begin{itemize}
-        \item It's easy: most of the infrastructure was from the \texttt{cookiecutter} I used (see my July 2022 GM)
-        \item It avoids duplication: \texttt{upf-tools} was discovered by Marnik and is now used in \texttt{AiiDA}
-    \end{itemize}
-    
-\end{frame}
-
-\begin{frame}{Take home messages}
-
-   % \includegraphics[height=0.2\paperheight]{figures/colonna_2019_gw100_ip.jpeg}
-   % \hfill
-   \includegraphics[height=0.25\paperheight]{figures/fig_nguyen_prx_bandgaps.png}
-   \hfill
-   \includegraphics[height=0.275\paperheight]{figures/proj_disentanglement_fig1a.png}
-   \hfill
-   \adjustbox{height=0.275\paperheight}{\input{supercell_workflow.tex}\end{tikzpicture}}
-
-   \begin{itemize}
-      \item Koopmans functionals yield band structures with comparable accuracy to state-of-the-art GW
-      \item the release of \texttt{koopmans} means non-experts can now use Koopmans functionals in their own research
-      \item work is ongoing to automate the Wannierization bottleneck
-   \end{itemize}
-
-\end{frame}
-
-\begingroup
-\setbeamertemplate{footline}{}
-\begin{frame}{Acknowledgements}
-   \begin{center}
-      \footnotesize
-      \begin{tabularx}{\textwidth}{CCCC}
-         \includegraphics[height = 0.3\paperheight]{figures/nicola_marzari.jpg}     &
-         \includegraphics[height = 0.3\paperheight]{figures/nicola_colonna2.png}    &
-         \includegraphics[height = 0.3\paperheight]{photos/riccardo_degennaro.jpeg} \\
-         % \includegraphics[height = 0.2\paperheight]{figures/daniel_cole.jpeg}       &
-         % \includegraphics[height = 0.2\paperheight]{figures/mike_payne.jpeg}        &
-         % \includegraphics[height = 0.2\paperheight]{figures/david_oregan.jpg}         \\
-         Nicola Marzari                                                             &
-         Nicola Colonna                                                             &
-         Riccardo De~Gennaro                                                        &
-         Junfeng Qiao
-      \end{tabularx}
-   \end{center}
-
-   \vspace{2ex}
-
-   \begin{center}
-      \includegraphics[height = 0.15\paperheight]{logos/SNF_logo_standard_print_color_pos_e.eps}
-      \hspace{3em}
-      \includegraphics[height = 0.15\paperheight]{figures/marvel_trimmed.png}
-   \end{center}
-
-   \vspace{1ex}
-
-   \begin{center}
-      slides available at \includegraphics[height=\fontcharht\font`\B]{logos/github-favicon.png} github/elinscott-talks and on the THEOS wiki
-   \end{center}
-
-   % \begin{multicols}{2}
-   %    \tiny
-   %    \printbibliography
-   %    \normalsize
-   % \end{multicols}
-   \vspace{2ex}
-   \scriptsize
-
-   \setbeamercolor*{bibliography entry title}{fg=black}
-   \setbeamercolor*{bibliography entry author}{fg=black}
-   \setbeamercolor*{bibliography entry location}{fg=black}
-   \setbeamercolor*{bibliography entry note}{fg=black}
-
-   \vspace{2ex}
-   \scriptsize
-\end{frame}
-\endgroup
-\backupbegin
-\begin{frame}{}
-
-    \begin{center}
-        \huge SPARE SLIDES
-    \end{center}
-
-\end{frame}
 
 \begin{frame}{Accurate band structures}
-   
-\begin{table}[t]
-   \centering
-   \scriptsize
-   \begin{tabular}{r@{ $\rightarrow$ } l *{3}{d{2.2}} >{\color{seaborn_red}}S[table-format = 2.2] >{\color{seaborn_red}}S[table-format = 2.2] d{2.2} @{$\pm$} d{1.2}}
-      \hline
-      \hline
-      \multicolumn{2}{c}{ }
-                                & \multicolumn{1}{c}{PBE}
-                                & \multicolumn{1}{c}{G\textsubscript{0}W\textsubscript{0}\footnote{\cite{Shishkin2007} for $E_g$ and \cite{Hybertsen1986} for the transitions;}}
-                                & \multicolumn{1}{c}{scG$\tilde{\mathsf{W}}$\footcite{Shishkin2007a}}
-                                & \multicolumn{1}{c}{
-                                 \textcolor{seaborn_red}{\bfseries KI@[PBE,MLWFs]}}
-                                & \multicolumn{1}{c}{
-                                 \textcolor{seaborn_red}{\bfseries KIPZ@PBE}}
-                                & \multicolumn{2}{c}{exp\footcite{Madelung2004}}                                                                                                                                                                   \\
-      \hline
-      \multicolumn{2}{c}{$E_g$} &
-      0.49 &  1.06 & 1.14 &  1.16 &   1.15 & \multicolumn{2}{c}{1.17}\\
-      $\Gamma_{1v}$ & $\Gamma_{25'v}$ & 11.97 & 12.04 &      & 11.97 & 12.09 & 12.5 &  0.6\\
-      $X_{1v}$ & $\Gamma_{25'v}$ &  7.82 &       &      &  7.82       &       & \multicolumn{2}{c}{7.75}\\
-      $X_{4v}$ & $\Gamma_{25'v}$ &  2.85 &  2.99 &      &  2.85 & 2.86 & \multicolumn{2}{c}{2.90}\\
-      $L_{2'v}$ & $\Gamma_{25'v}$ &  9.63 &  9.79 &      &  9.63 &  9.74 &  9.3 &  0.4\\
-      $L_{1v}$ & $\Gamma_{25'v}$ &  6.98 &  7.18 &      &  6.98 &   7.04 &  6.8 &  0.2\\
-      $L_{3'v}$ & $\Gamma_{25'v}$ &  1.19 &  1.27 &      &  1.19 &       &  1.2 &  0.2\\
-      $\Gamma_{25'v}$ &  $\Gamma_{15c}$ &  2.48 &  3.29 &      &  3.17  &  3.20 & 3.35 & 0.01\\
-      $\Gamma_{25'v}$ &  $\Gamma_{2'c}$ &  3.28 &  4.02 &      &  3.95  &  3.95 & 4.15 & 0.05\\
-      $\Gamma_{25'v}$ &        $X_{1c}$ &  0.62 &  1.38 &      &  1.28  &  1.31 & \multicolumn{2}{c}{1.13} \\
-      $\Gamma_{25'v}$ &        $L_{1c}$ &  1.45 &  2.21 &      &  2.12  &  2.13 & 2.04 & 0.06\\
-      $\Gamma_{25'v}$ &        $L_{3c}$ &  3.24 &  4.18 &      &  3.91  &  3.94 &  3.9 &  0.1\\
-      \hline
-      \multicolumn{2}{c}{MSE} & 0.35 &  0.02 &      &  0.01 &   0.03\\
-      \multicolumn{2}{c}{MAE} & 0.44 &  0.21 &      &  0.14 &   0.17\\
-      \hline
-      \hline
-   \end{tabular}
 
-   % \textsuperscript{\emph{a}} this work;
-   % \textsuperscript{\emph{b}} Ref.~\citenum{Shishkin2007} for $E_g$ and Ref.~\citenum{Hybertsen1986} for the transitions;
-   % \textsuperscript{\emph{c}} Ref.~\citenum{Shishkin2007a};
-   % \textsuperscript{\emph{d}} Ref.~\citenum{DeGennaro2022};
-   % \textsuperscript{\emph{e}} Ref.~\citenum{Madelung2004}
-\end{table}
+   \begin{table}[t]
+      \centering
+      \scriptsize
+      \begin{tabular}{r@{ $\rightarrow$ } l *{3}{d{2.2}} >{\color{seaborn_red}}S[table-format = 2.2] >{\color{seaborn_red}}S[table-format = 2.2] d{2.2} @{$\pm$} d{1.2}}
+         \hline
+         \hline
+         \multicolumn{2}{c}{ }
+                                   & \multicolumn{1}{c}{PBE}
+                                   & \multicolumn{1}{c}{G\textsubscript{0}W\textsubscript{0}\footnote{\cite{Shishkin2007} for $E_g$ and \cite{Hybertsen1986} for the transitions;}}
+                                   & \multicolumn{1}{c}{scG$\tilde{\mathsf{W}}$\footcite{Shishkin2007a}}
+                                   & \multicolumn{1}{c}{
+            \textcolor{seaborn_red}{\bfseries KI@[PBE,MLWFs]}}
+                                   & \multicolumn{1}{c}{
+            \textcolor{seaborn_red}{\bfseries KIPZ@PBE}}
+                                   & \multicolumn{2}{c}{exp\footcite{Madelung2004}}                                                                                                                                                                                             \\
+         \hline
+         \multicolumn{2}{c}{$E_g$} &
+         0.49                      & 1.06                                                                                                                                           & 1.14  & 1.16  & 1.15 & \multicolumn{2}{c}{1.17}                                           \\
+         $\Gamma_{1v}$             & $\Gamma_{25'v}$                                                                                                                                & 11.97 & 12.04 &      & 11.97                    & 12.09 & 12.5                     & 0.6  \\
+         $X_{1v}$                  & $\Gamma_{25'v}$                                                                                                                                & 7.82  &       &      & 7.82                     &       & \multicolumn{2}{c}{7.75}        \\
+         $X_{4v}$                  & $\Gamma_{25'v}$                                                                                                                                & 2.85  & 2.99  &      & 2.85                     & 2.86  & \multicolumn{2}{c}{2.90}        \\
+         $L_{2'v}$                 & $\Gamma_{25'v}$                                                                                                                                & 9.63  & 9.79  &      & 9.63                     & 9.74  & 9.3                      & 0.4  \\
+         $L_{1v}$                  & $\Gamma_{25'v}$                                                                                                                                & 6.98  & 7.18  &      & 6.98                     & 7.04  & 6.8                      & 0.2  \\
+         $L_{3'v}$                 & $\Gamma_{25'v}$                                                                                                                                & 1.19  & 1.27  &      & 1.19                     &       & 1.2                      & 0.2  \\
+         $\Gamma_{25'v}$           & $\Gamma_{15c}$                                                                                                                                 & 2.48  & 3.29  &      & 3.17                     & 3.20  & 3.35                     & 0.01 \\
+         $\Gamma_{25'v}$           & $\Gamma_{2'c}$                                                                                                                                 & 3.28  & 4.02  &      & 3.95                     & 3.95  & 4.15                     & 0.05 \\
+         $\Gamma_{25'v}$           & $X_{1c}$                                                                                                                                       & 0.62  & 1.38  &      & 1.28                     & 1.31  & \multicolumn{2}{c}{1.13}        \\
+         $\Gamma_{25'v}$           & $L_{1c}$                                                                                                                                       & 1.45  & 2.21  &      & 2.12                     & 2.13  & 2.04                     & 0.06 \\
+         $\Gamma_{25'v}$           & $L_{3c}$                                                                                                                                       & 3.24  & 4.18  &      & 3.91                     & 3.94  & 3.9                      & 0.1  \\
+         \hline
+         \multicolumn{2}{c}{MSE}   & 0.35                                                                                                                                           & 0.02  &       & 0.01 & 0.03                                                               \\
+         \multicolumn{2}{c}{MAE}   & 0.44                                                                                                                                           & 0.21  &       & 0.14 & 0.17                                                               \\
+         \hline
+         \hline
+      \end{tabular}
+
+      % \textsuperscript{\emph{a}} this work;
+      % \textsuperscript{\emph{b}} Ref.~\citenum{Shishkin2007} for $E_g$ and Ref.~\citenum{Hybertsen1986} for the transitions;
+      % \textsuperscript{\emph{c}} Ref.~\citenum{Shishkin2007a};
+      % \textsuperscript{\emph{d}} Ref.~\citenum{DeGennaro2022};
+      % \textsuperscript{\emph{e}} Ref.~\citenum{Madelung2004}
+   \end{table}
 \end{frame}
 % 
 % \begin{frame}{Spare slide}
@@ -838,7 +878,7 @@
          %    \renewcommand\arraystretch{1.3}
          %    \setlength\tabcolsep{2pt}% <-- added
          \begin{tabular}{c S[table-format = 2.2] S[table-format = 2.2] S[table-format = 2.2] S[table-format = 2.2] >{\color{seaborn_red}\bfseries}S[table-format = 2.2] S[table-format = 2.2]}
-            ZnO                                  & {LDA} & {HSE} & {GW$_0$} & {scG$\tilde{\rm W}$} & {KI} & {exp}       \\
+            ZnO                                  & {LDA} & {HSE} & {GW$_0$} & {scG$\tilde{\sf W}$} & {KI} & {exp}       \\
             \hline
             $E_\mathsf{gap}$ (eV)                & 0.79  & 2.79  & 3.0      & 3.2                  & 3.62 & 3.60        \\
             $\langle \varepsilon_d \rangle$ (eV) & -5.1  & -6.1  & -6.4     & -6.7                 & -6.9 & {-7.5/-8.0} \\
@@ -877,20 +917,6 @@
    \blfootcite{Colonna2018,Nguyen2015}
 \end{frame}
 
-\begin{frame}{Koopmans functionals: results for molecules}
-   Electron affinities $ = E(N) - E(N+1) \stackrel{?}{=} -\varepsilon_{LU}$ of molecules cf. CCSD(T)/exp
-   \vspace{2ex}
-
-   \small
-   \begin{center}
-      For 15 of the GW100 molecules with bound LUMOs
-
-      \includegraphics[height=0.5\textheight]{figures/fig_gw100_ea_mae_mse.pdf}
-
-      \textcolor{seaborn_bg_grey_darker}{\footnotesize Linscott et al. (in prep)}
-   \end{center}
-\end{frame}
-
 \begin{frame}{Koopmans functionals: results for toy systems}
    For Hooke's atom (two electrons in a harmonic confining potential with Coulombic repulsion)
 
@@ -900,12 +926,33 @@
       \end{subfigure}
       \begin{subfigure}{0.4\textwidth}
          \onslide<2->{
-         \includegraphics[width=\columnwidth]{figures/schubert_vxc_integrated.jpeg}
+            \includegraphics[width=\columnwidth]{figures/schubert_vxc_integrated.jpeg}
          }
       \end{subfigure}
    \end{figure}
 
    \blfootcite{Schubert2023}
+\end{frame}
+
+\begin{frame}{Criteria for ideal projectors}
+
+   The projectability is
+   \begin{equation*}
+      p_{m\mathbf{k}} = \sum_n |\langle \varphi_n \mid \psi_{m\mathbf{k}}\rangle |^2
+   \end{equation*}
+
+   We want a set of projectors such that\dots
+   \begin{itemize}
+      \item they should have a large overlap with some Kohn-Sham states and a small overlap with all the others% i.e. $p_{m\mathbf{k}}$ should be close to 0 or 1 for all $m$ and $\mathbf{k}$
+      \item they should lie within the span of the Kohn-Sham states% i.e. $\sum_{m\mathbf{k}} p_{m\mathbf{k}}$ should be as large as possible
+   \end{itemize}
+
+   We can meet these criteria if we maximise the functional
+   \begin{equation*}
+      F[\{\varphi_n\}] = \frac{1}{N_\mathbf{k} N_w} \sum_{\mathbf{k}} \sum_{m \in \mathcal{S}_\mathbf{k}} p_{m\mathbf{k}}
+   \end{equation*}
+
+   where $\mathcal{S}_\mathbf{k}$ corresponds to the $N_w$-largest values of $p_{m\mathbf{k}}$.
 \end{frame}
 \backupend
 \end{document}
