@@ -138,7 +138,7 @@
 \usesmartdiagramlibrary{additions}
 \usepackage{multicol}
 \usepackage{helvet}
-% \usepackage{sansmath}
+% \usepackage{sansmathfonts}
 % \sansmath
 \usepackage{cancel} % for \cancel
 \usepackage[normalem]{ulem} % for sout (strike out)
@@ -173,17 +173,6 @@
 \newcolumntype{L}{>{\raggedright\arraybackslash}X}
 \newcolumntype{C}{>{\centering\arraybackslash}X}
 \newcolumntype{R}{>{\raggedleft\arraybackslash}X}
-
-% For checklist
-%\usepackage{enumitem}
-%\newlist{todolist}{itemize}{2}
-%\setlist[todolist]{label=$\square$}
-\usepackage{pifont}
-\newcommand{\cmark}{\ding{51}}%
-\newcommand{\xmark}{\ding{55}}%
-\newcommand{\done}{\rlap{$\square$}{\raisebox{2pt}{\large\hspace{1pt}\cmark}}%
-\hspace{-2.5pt}}
-\newcommand{\wontfix}{\rlap{$\square$}{\large\hspace{1pt}\xmark}}
 
 \newcommand{\bra}[1]{\langle #1|}
 \newcommand{\braket}[2]{\langle #1|#2\rangle}
@@ -315,48 +304,37 @@
 }
 
 \setbeamertemplate{title page}
-{
-  \leavevmode%
-  \vbox{%
-  \vspace{-0.15\paperwidth}%
-  \noindent\begin{tcolorbox}[enhanced,watermark graphics=photos/psi_in_mist_large.jpg, width=1.01\paperwidth, height=0.741\paperwidth, watermark zoom=1.0, grow to left by=0.05\paperwidth, frame hidden, coltext=kgrey]
+{%
+  % \raggedleft
+  %     \includegraphics[height=0.05\paperheight]{logos/logo_marvel_color_transparent.png}
+  %     \hspace{0.001\paperheight}
+  %     \includegraphics[height=0.05\paperheight]{logos/SNF_logo_standard_print_color_pos_e.eps}
+  \vspace{-0.068\paperheight}
+  \begin{columns}
+    \begin{column}{\paperheight}
+      \includegraphics[height=0.99\paperheight]{figures/black_box_filled_square.png}
+    \end{column}
+    \begin{column}{\dimexpr\paperwidth-0.99\paperheight}
+      \vfill
+      \bf
+      \Large
+      \emph{\inserttitle}
 
-  \vspace{0.26\paperwidth}
-
-  \begin{minipage}{\textwidth}
-  %  \begin{flushright}
-  %  \includegraphics[height=0.05\textheight]{logos/logo_marvel_color_transparent.png}
-  %  \hspace{0.1ex}
-  %  \includegraphics[height=0.05\textheight]{logos/SNF_logo_standard_web_color_pos_e.png}
-  %  % \hspace{0.01\textheight}
-  %  % \includegraphics[height=0.05\textheight]{logos/black_cropped.eps}
-  %  \hspace{0.1cm}\hbox{}
-  % \end{flushright}
-
-  \begin{center} 
-  \LARGE
-
-  \textbf{\inserttitle}
-
-  \large
-  \textbf{\insertsubtitle}
-  \end{center}
-  \end{minipage}
-  \end{tcolorbox}
-
-  \vspace{-3.7em}
+      \vspace{0.5em}
+      \normalsize
+      \insertauthor
+      
+      \vfill
+    \end{column}
+  \end{columns}
+  \vspace{-0.02\paperheight}
   \begin{tcolorbox}[width=0.976\paperwidth, enhanced, colback=kgrey, grow to left by=0.035\paperwidth,]
   %  \begin{center}
   %  \footnotesize\bf\insertauthor\quad \raisebox{0.1ex}{|} \quad \insertshortinstitute\ \quad \raisebox{0.1ex}{|} \quad THEOS Group Meeting \quad \raisebox{0.1ex}{|} \quad \insertdate \quad \raisebox{0.1ex}{|} \quad \includegraphics[height=1.5ex]{logos/SNF_logo_standard_web_sw_neg_e.png} \ \ \includegraphics[height=1.5ex]{logos/logo_marvel_color_transparent_inverted.png}
   %  \end{center}
   \vspace{-0.7ex}
-  \hfill \footnotesize\bf\insertauthor \hfill \raisebox{0.1ex}{|} \hfill \raisebox{-1.1ex}{\includegraphics[height=3.4ex]{logos/psi_on_transparent.png}} \hfill \raisebox{0.1ex}{|} \hfill THEOS Group Meeting \hfill \raisebox{0.1ex}{|} \hfill \insertdate \hfill \raisebox{0.1ex}{|} \hfill \includegraphics[height=1.5ex]{logos/SNF_logo_standard_web_sw_neg_e.png} \ \ \includegraphics[height=1.5ex]{logos/logo_marvel_color_transparent_inverted.png} \ \hfill
-  %  \end{flushright}
+  \hfill \footnotesize\bf\hfill \raisebox{-1.1ex}{\includegraphics[height=3.4ex]{logos/psi_on_transparent.png}} \hfill \raisebox{0.1ex}{|} \hfill DPG conference \hfill \raisebox{0.1ex}{|} \hfill \insertdate \hfill \raisebox{0.1ex}{|} \hfill \includegraphics[height=1.5ex]{logos/SNF_logo_standard_web_sw_neg_e.png} \ \ \includegraphics[height=1.5ex]{logos/logo_marvel_color_transparent_inverted.png} \ \qquad \qquad \hfill
   \end{tcolorbox}
-  }
-
-
-	
 }
 %\setbeamerfont{frametitle}{series=\bfseries}
 \setbeamertemplate{footline}
@@ -366,190 +344,59 @@
 % Title slide %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \author{Edward Linscott}
 \institute{PSI}
-\date{9 April 2024}
-\title{Towards black-box Koopmans band structures}
-\subtitle{or: getting lost down a pseudopotential-generation rabbit hole}
+\date{21 March 2024}
+\title{Black-box, accurate, and efficient prediction of band structures with Koopmans functionals}
+% \subtitle{or: getting lost down a pseudopotential-generation rabbit hole}
 \begin{document}
 
-\begin{frame}{Beethoven's late string quartets}
-    \centering
-
-    String Quartet No. 14 - Adagio ma non troppo e molto espressivo
-
-    \vspace{6pt}
-
-    \includegraphics[height=0.6\paperheight]{photos/beethoven.jpg}
-
-    {\tiny \href{https://www.youtube.com/watch?v=JE_crvhG3Co\&t=454s\&ab_channel=DavidSukonick\#t=4m27s}{click here for video}}
-
-    \onslide<2->{``indecipherable, uncorrected horrors'' -- Spohr}
-
-    \onslide<3->{``After this, what is left for us to write?'' -- Schubert}
-
-\end{frame}
+\definecolor{grey_from_blender}{HTML}{b9b9c0}
+\setbeamercolor{background canvas}{bg=grey_from_blender}
 
 \frame{\titlepage}
 % \frame{\titlepage}
+\setbeamercolor{background canvas}{bg=white}
 
-\begin{frame}{\normalsize Koopmans functionals give accurate band structures}
-   \begin{minipage}[c]{0.35\textwidth}
-      \includegraphics[width=\textwidth]{figures/fig_nguyen_prx_bandgaps.png}
-   \end{minipage}
-   \hspace{1em}
-   \begin{minipage}[c]{0.6\textwidth}
+\begin{frame}{Accurate band structures}
+   Band structures are a pillar of electronic structure theory... but can we calculate them accurately and efficiently?
 
-      \footnotesize
-      Mean absolute error (eV) across prototypical semiconductors and insulators
+   \vspace{-1ex}
 
+   \begin{columns}
+      \begin{column}{0.5\textwidth}
+      \begin{description}[<+(1)->]
+         \item[DFT] qualitative failures
+         \item[GW] accurate but expensive, ill-behaved, and not a functional
+         \item[Koopmans functionals] accurate band structures within a functional theory
+      \end{description}
+      \onslide<5->{
       \vspace{1ex}
+      \footnotesize
       \begin{tabular}{c S[table-format = 2.2] S[table-format = 2.2] >{\color{seaborn_red}\bfseries}S[table-format = 2.2] >{\color{seaborn_red}\bfseries}S[table-format = 2.2] S[table-format = 2.2]}
-                          & {PBE} & {G\textsubscript{0}W\textsubscript{0}} & {KI} & {KIPZ} & {QSG$\tilde{\mathrm{W}}$} \\
+                          & {PBE} & {G\textsubscript{0}W\textsubscript{0}} & {KI} & {KIPZ} & {QSG$\tilde{\mathsf{W}}$} \\
          \midrule
          \midrule
-         $E_\mathrm{gap}$ & 2.54  & 0.56                                   & 0.27 & 0.22   & 0.18                      \\
+         $E_\mathsf{gap}$ & 2.54  & 0.56                                   & 0.27 & 0.22   & 0.18                      \\
          %                                  & {MAPE (\%)} & 48.28 & 12.10      & 7.0           \\
          \midrule
          IP               & 1.09  & 0.39                                   & 0.19 & 0.21   & 0.49                      \\
          %                                  & {MAPE (\%)} & 15.58 & 5.71                                   & 2.99 & 3.14   & 7.41
       \end{tabular}
-   \end{minipage}
 
+      }
+      \end{column}
+      \begin{column}{0.5\textwidth}
+         \begin{center}
+            \onslide<4->{
+            \includegraphics[width=0.8\textwidth]{figures/fig_nguyen_prx_bandgaps.png}
+            }
+         \end{center}
+      \end{column}
+   \end{columns}
    \blfootcite{Nguyen2018}
+
 \end{frame}
 
-\begin{frame}{\normalsize Koopmans functionals give accurate band structures}
-   
-\begin{table}[t]
-   \centering
-   \scriptsize
-   \begin{tabular}{r@{ $\rightarrow$ } l *{3}{d{2.2}} >{\color{seaborn_red}}S[table-format = 2.2] >{\color{seaborn_red}}S[table-format = 2.2] d{2.2} @{$\pm$} d{1.2}}
-      \hline
-      \hline
-      \multicolumn{2}{c}{ }
-                                & \multicolumn{1}{c}{PBE}
-                                & \multicolumn{1}{c}{G\textsubscript{0}W\textsubscript{0}\footnote{\cite{Shishkin2007} for $E_g$ and \cite{Hybertsen1986} for the transitions;}}
-                                & \multicolumn{1}{c}{scG$\tilde{\mathrm{W}}$\footcite{Shishkin2007a}}
-                                & \multicolumn{1}{c}{
-                                 \textcolor{seaborn_red}{\bfseries KI@[PBE,MLWFs]}}
-                                & \multicolumn{1}{c}{
-                                 \textcolor{seaborn_red}{\bfseries KIPZ@PBE}}
-                                & \multicolumn{2}{c}{exp\footcite{Madelung2004}}                                                                                                                                                                   \\
-      \hline
-      \multicolumn{2}{c}{$E_g$} &
-      0.49 &  1.06 & 1.14 &  1.16 &   1.15 & \multicolumn{2}{c}{1.17}\\
-      $\Gamma_{1v}$ & $\Gamma_{25'v}$ & 11.97 & 12.04 &      & 11.97 & 12.09 & 12.5 &  0.6\\
-      $X_{1v}$ & $\Gamma_{25'v}$ &  7.82 &       &      &  7.82       &       & \multicolumn{2}{c}{7.75}\\
-      $X_{4v}$ & $\Gamma_{25'v}$ &  2.85 &  2.99 &      &  2.85 & 2.86 & \multicolumn{2}{c}{2.90}\\
-      $L_{2'v}$ & $\Gamma_{25'v}$ &  9.63 &  9.79 &      &  9.63 &  9.74 &  9.3 &  0.4\\
-      $L_{1v}$ & $\Gamma_{25'v}$ &  6.98 &  7.18 &      &  6.98 &   7.04 &  6.8 &  0.2\\
-      $L_{3'v}$ & $\Gamma_{25'v}$ &  1.19 &  1.27 &      &  1.19 &       &  1.2 &  0.2\\
-      $\Gamma_{25'v}$ &  $\Gamma_{15c}$ &  2.48 &  3.29 &      &  3.17  &  3.20 & 3.35 & 0.01\\
-      $\Gamma_{25'v}$ &  $\Gamma_{2'c}$ &  3.28 &  4.02 &      &  3.95  &  3.95 & 4.15 & 0.05\\
-      $\Gamma_{25'v}$ &        $X_{1c}$ &  0.62 &  1.38 &      &  1.28  &  1.31 & \multicolumn{2}{c}{1.13} \\
-      $\Gamma_{25'v}$ &        $L_{1c}$ &  1.45 &  2.21 &      &  2.12  &  2.13 & 2.04 & 0.06\\
-      $\Gamma_{25'v}$ &        $L_{3c}$ &  3.24 &  4.18 &      &  3.91  &  3.94 &  3.9 &  0.1\\
-      \hline
-      \multicolumn{2}{c}{MSE} & 0.35 &  0.02 &      &  0.01 &   0.03\\
-      \multicolumn{2}{c}{MAE} & 0.44 &  0.21 &      &  0.14 &   0.17\\
-      \hline
-      \hline
-   \end{tabular}
 
-   % \textsuperscript{\emph{a}} this work;
-   % \textsuperscript{\emph{b}} Ref.~\citenum{Shishkin2007} for $E_g$ and Ref.~\citenum{Hybertsen1986} for the transitions;
-   % \textsuperscript{\emph{c}} Ref.~\citenum{Shishkin2007a};
-   % \textsuperscript{\emph{d}} Ref.~\citenum{DeGennaro2022};
-   % \textsuperscript{\emph{e}} Ref.~\citenum{Madelung2004}
-\end{table}
-\end{frame}
-
-% \begin{frame}{\normalsize Koopmans functionals give accurate band structures}
-%    \begin{figure}[t]
-%       \centering
-%       \begin{subfigure}{0.25\textwidth}
-%          \includegraphics[width=\columnwidth]{figures/ZnO_lda.png}
-%       \end{subfigure}
-%       \begin{subfigure}{0.25\textwidth}
-%          \includegraphics[width=\columnwidth]{figures/ZnO_hse.png}
-%       \end{subfigure}
-%       \begin{subfigure}{0.25\textwidth}
-%          \includegraphics[width=\columnwidth]{figures/ZnO_ki.png}
-%       \end{subfigure}
-%       \begin{subfigure}{\textwidth} %<-- changed width
-%          \centering
-%          %    \renewcommand\tabularxcolumn[1]{m{#1}}% <-- added
-%          %    \renewcommand\arraystretch{1.3}
-%          %    \setlength\tabcolsep{2pt}% <-- added
-%          \begin{tabular}{c S[table-format = 2.2] S[table-format = 2.2] S[table-format = 2.2] S[table-format = 2.2] >{\color{seaborn_red}\bfseries}S[table-format = 2.2] S[table-format = 2.2]}
-%             ZnO                                  & {LDA} & {HSE} & {GW$_0$} & {scG$\tilde{\rm W}$} & {KI} & {exp}       \\
-%             \hline
-%             $E_\mathrm{gap}$ (eV)                & 0.79  & 2.79  & 3.0      & 3.2                  & 3.62 & 3.60        \\
-%             $\langle \varepsilon_d \rangle$ (eV) & -5.1  & -6.1  & -6.4     & -6.7                 & -6.9 & {-7.5/-8.0} \\
-%          \end{tabular}
-%          %        \caption{table}
-%       \end{subfigure}
-%       % \caption{Band structure of ZnO calculated at different level of theory:
-%       %    LDA (left panel), HSE (middle panel) and KI (right panel). Shaded areas
-%       %    highlight valence (light blue) and conduction (light red) manifolds. The
-%       %    experimental values for the band gap and for the energy position of
-%       %    Zn $d$-states are represented by the dashed green line and by the dashed
-%       %    red line, respectively.
-%       %    Table: Band gap and position of Zn $d$ states with respect to the top of the valence band at different level of theory compared to experimental and GW results from Ref.~\onlinecite{shishkin_accurate_2007}.}
-%    \end{figure}
-%    \blfootcite{Colonna2022}
-% \end{frame}
-
-% \begin{frame}{Koopmans functionals: results for molecules}
-%    \small
-%    Ionisation potentials $ = E(N-1) - E(N) \stackrel{?}{=} -\varepsilon_{HO}$ of 100 molecules (the GW100 set) cf. CCSD(T)
-%    \begin{center}
-%       \includegraphics[height=0.2\textwidth]{figures/colonna_2019_gw100_ip}
-%       % \onslide<2->{\includegraphics[height=0.23\textwidth]{figures/colonna_2019_gw100_deeper}}
-%    \end{center}
-% 
-%    \vspace{-3ex}
-%    Ultraviolet photoemission spectra
-%    \begin{center}
-%       \begin{tikzpicture}
-%          \node [inner sep=0pt](fig) at (0,0) {\includegraphics[height=0.35\textheight]{figures/fig_nguyen_prl_spectra.png}};
-%          \draw [very thick, color=seaborn_red] (-5.35,-0.07) rectangle (5.4,1.6);
-%       \end{tikzpicture}
-%    \end{center}
-%    \vspace{-2ex}
-% 
-%    \blfootcite{Colonna2018,Nguyen2015}
-% \end{frame}
-
-% \begin{frame}{Koopmans functionals: results for molecules}
-%    Electron affinities $ = E(N) - E(N+1) \stackrel{?}{=} -\varepsilon_{LU}$ of molecules cf. CCSD(T)/exp
-%    \vspace{2ex}
-% 
-%    \small
-%    \begin{center}
-%       For 15 of the GW100 molecules with bound LUMOs
-% 
-%       \includegraphics[height=0.5\textheight]{figures/fig_gw100_ea_mae_mse.pdf}
-% 
-%       \textcolor{seaborn_bg_grey_darker}{\footnotesize Linscott et al. (in prep)}
-%    \end{center}
-% \end{frame}
-
-% \begin{frame}{Koopmans functionals: results for toy systems}
-%    For Hooke's atom (two electrons in a harmonic confining potential with Coulombic repulsion)
-% 
-%    \begin{figure}[t]
-%       \begin{subfigure}{0.4\textwidth}
-%          \includegraphics[width=\columnwidth]{figures/schubert_vxc.jpeg}
-%       \end{subfigure}
-%       \begin{subfigure}{0.4\textwidth}
-%          \onslide<2->{
-%          \includegraphics[width=\columnwidth]{figures/schubert_vxc_integrated.jpeg}
-%          }
-%       \end{subfigure}
-%    \end{figure}
-% 
-%    \blfootcite{Schubert2023}
-% \end{frame}
 
 \begin{frame}{Features of Koopmans functionals}
    \begin{align*}
@@ -566,20 +413,71 @@
    \end{align*}
    General features:
    \begin{itemize}[<+(1)->]
-      \item a correction to DFT that enforces a generalized piecewise linearity condition
+      \item a correction to DFT that enforces a generalized piecewise linearity condition (eigenvalues should match total energy differences)
       \item is orbital-density-dependent
       \item relies on localization
       \item requires the ab initio calculation of screening parameters
    \end{itemize}
    
-   \onslide<6->{In order to evaluate this functional, one must...}
-   \begin{itemize}[<+(1)->]
-      \item initialize a set of variational orbitals
-      \item calculate the screening parameters $\{\alpha_i\}$
-      \item construct and diagonalize the Hamiltonian
-   \end{itemize}
 \end{frame}
 
+\begin{frame}{What should go in the box?}
+
+   \begin{columns}
+      \begin{column}{0.5\textwidth}
+         In order to evaluate this functional, one must...
+         \begin{itemize}[<+(1)->]
+            \item initialize a set of variational orbitals
+            \item calculate the screening parameters $\{\alpha_i\}$
+            \item construct and diagonalize the Hamiltonian
+         \end{itemize}
+
+         \onslide<6->{For a black box, we need...}
+         \begin{itemize}[<+(7)->]
+            \item automated start-to-finish calculations
+            \item minimal human input
+         \end{itemize}
+      \end{column}
+      \begin{column}{0.5\textwidth}
+         \onslide<5->{\includegraphics[width=\columnwidth]{figures/black_box_filled_square.png}}
+      \end{column}
+   \end{columns}
+\end{frame}
+
+\begin{frame}{}
+   \begin{center}
+      \includegraphics[width=0.6\textwidth]{figures/koopmans_grey_on_transparent.png}
+   \end{center}
+
+   \vspace{-2ex}
+
+   \begin{columns}
+      \begin{column}{0.55\textwidth}
+         \begin{itemize}
+            \item v1.0 released last year\footnotemark[1]
+            \item implementations of Koopmans functionals within Quantum ESPRESSO
+            \item automated workflows
+                  \begin{itemize}
+                     \item Koopmans calculations
+                     \item Wannierization
+                     \item dielectric tensor
+                     \item ...
+                  \end{itemize}
+            \item built on top of ASE\footnotemark[2]
+            \item does not require expert knowledge
+         \end{itemize}
+      \end{column}
+
+      \begin{column}{0.4\textwidth}
+         \centering
+         \url{koopmans-functionals.org}
+         \includegraphics[width=\columnwidth]{figures/website_cropped.png}
+      \end{column}
+   \end{columns}
+   \footnotetext[1]{\cite{Linscott2023}}
+   \footnotetext[2]{\cite{Larsen2017}}
+\end{frame}
+% 
 \begin{frame}{Workflows}
    \onslide<2->{
       (a) finite difference calculations using a supercell
@@ -863,18 +761,151 @@
    \scriptsize
 \end{frame}
 \endgroup
-% \backupbegin
-% \begin{frame}{}
-% 
-%     \begin{center}
-%         \huge SPARE SLIDES
-%     \end{center}
-% 
-% \end{frame}
+\backupbegin
+\begin{frame}{}
+
+    \begin{center}
+        \huge SPARE SLIDES
+    \end{center}
+
+\end{frame}
+
+\begin{frame}{Accurate band structures}
+   
+\begin{table}[t]
+   \centering
+   \scriptsize
+   \begin{tabular}{r@{ $\rightarrow$ } l *{3}{d{2.2}} >{\color{seaborn_red}}S[table-format = 2.2] >{\color{seaborn_red}}S[table-format = 2.2] d{2.2} @{$\pm$} d{1.2}}
+      \hline
+      \hline
+      \multicolumn{2}{c}{ }
+                                & \multicolumn{1}{c}{PBE}
+                                & \multicolumn{1}{c}{G\textsubscript{0}W\textsubscript{0}\footnote{\cite{Shishkin2007} for $E_g$ and \cite{Hybertsen1986} for the transitions;}}
+                                & \multicolumn{1}{c}{scG$\tilde{\mathsf{W}}$\footcite{Shishkin2007a}}
+                                & \multicolumn{1}{c}{
+                                 \textcolor{seaborn_red}{\bfseries KI@[PBE,MLWFs]}}
+                                & \multicolumn{1}{c}{
+                                 \textcolor{seaborn_red}{\bfseries KIPZ@PBE}}
+                                & \multicolumn{2}{c}{exp\footcite{Madelung2004}}                                                                                                                                                                   \\
+      \hline
+      \multicolumn{2}{c}{$E_g$} &
+      0.49 &  1.06 & 1.14 &  1.16 &   1.15 & \multicolumn{2}{c}{1.17}\\
+      $\Gamma_{1v}$ & $\Gamma_{25'v}$ & 11.97 & 12.04 &      & 11.97 & 12.09 & 12.5 &  0.6\\
+      $X_{1v}$ & $\Gamma_{25'v}$ &  7.82 &       &      &  7.82       &       & \multicolumn{2}{c}{7.75}\\
+      $X_{4v}$ & $\Gamma_{25'v}$ &  2.85 &  2.99 &      &  2.85 & 2.86 & \multicolumn{2}{c}{2.90}\\
+      $L_{2'v}$ & $\Gamma_{25'v}$ &  9.63 &  9.79 &      &  9.63 &  9.74 &  9.3 &  0.4\\
+      $L_{1v}$ & $\Gamma_{25'v}$ &  6.98 &  7.18 &      &  6.98 &   7.04 &  6.8 &  0.2\\
+      $L_{3'v}$ & $\Gamma_{25'v}$ &  1.19 &  1.27 &      &  1.19 &       &  1.2 &  0.2\\
+      $\Gamma_{25'v}$ &  $\Gamma_{15c}$ &  2.48 &  3.29 &      &  3.17  &  3.20 & 3.35 & 0.01\\
+      $\Gamma_{25'v}$ &  $\Gamma_{2'c}$ &  3.28 &  4.02 &      &  3.95  &  3.95 & 4.15 & 0.05\\
+      $\Gamma_{25'v}$ &        $X_{1c}$ &  0.62 &  1.38 &      &  1.28  &  1.31 & \multicolumn{2}{c}{1.13} \\
+      $\Gamma_{25'v}$ &        $L_{1c}$ &  1.45 &  2.21 &      &  2.12  &  2.13 & 2.04 & 0.06\\
+      $\Gamma_{25'v}$ &        $L_{3c}$ &  3.24 &  4.18 &      &  3.91  &  3.94 &  3.9 &  0.1\\
+      \hline
+      \multicolumn{2}{c}{MSE} & 0.35 &  0.02 &      &  0.01 &   0.03\\
+      \multicolumn{2}{c}{MAE} & 0.44 &  0.21 &      &  0.14 &   0.17\\
+      \hline
+      \hline
+   \end{tabular}
+
+   % \textsuperscript{\emph{a}} this work;
+   % \textsuperscript{\emph{b}} Ref.~\citenum{Shishkin2007} for $E_g$ and Ref.~\citenum{Hybertsen1986} for the transitions;
+   % \textsuperscript{\emph{c}} Ref.~\citenum{Shishkin2007a};
+   % \textsuperscript{\emph{d}} Ref.~\citenum{DeGennaro2022};
+   % \textsuperscript{\emph{e}} Ref.~\citenum{Madelung2004}
+\end{table}
+\end{frame}
 % 
 % \begin{frame}{Spare slide}
 % \end{frame}
 % 
 % 
-% \backupend
+\begin{frame}{\normalsize Koopmans functionals give accurate band structures}
+   \begin{figure}[t]
+      \centering
+      \begin{subfigure}{0.25\textwidth}
+         \includegraphics[width=\columnwidth]{figures/ZnO_lda.png}
+      \end{subfigure}
+      \begin{subfigure}{0.25\textwidth}
+         \includegraphics[width=\columnwidth]{figures/ZnO_hse.png}
+      \end{subfigure}
+      \begin{subfigure}{0.25\textwidth}
+         \includegraphics[width=\columnwidth]{figures/ZnO_ki.png}
+      \end{subfigure}
+      \begin{subfigure}{\textwidth} %<-- changed width
+         \centering
+         %    \renewcommand\tabularxcolumn[1]{m{#1}}% <-- added
+         %    \renewcommand\arraystretch{1.3}
+         %    \setlength\tabcolsep{2pt}% <-- added
+         \begin{tabular}{c S[table-format = 2.2] S[table-format = 2.2] S[table-format = 2.2] S[table-format = 2.2] >{\color{seaborn_red}\bfseries}S[table-format = 2.2] S[table-format = 2.2]}
+            ZnO                                  & {LDA} & {HSE} & {GW$_0$} & {scG$\tilde{\rm W}$} & {KI} & {exp}       \\
+            \hline
+            $E_\mathsf{gap}$ (eV)                & 0.79  & 2.79  & 3.0      & 3.2                  & 3.62 & 3.60        \\
+            $\langle \varepsilon_d \rangle$ (eV) & -5.1  & -6.1  & -6.4     & -6.7                 & -6.9 & {-7.5/-8.0} \\
+         \end{tabular}
+         %        \caption{table}
+      \end{subfigure}
+      % \caption{Band structure of ZnO calculated at different level of theory:
+      %    LDA (left panel), HSE (middle panel) and KI (right panel). Shaded areas
+      %    highlight valence (light blue) and conduction (light red) manifolds. The
+      %    experimental values for the band gap and for the energy position of
+      %    Zn $d$-states are represented by the dashed green line and by the dashed
+      %    red line, respectively.
+      %    Table: Band gap and position of Zn $d$ states with respect to the top of the valence band at different level of theory compared to experimental and GW results from Ref.~\onlinecite{shishkin_accurate_2007}.}
+   \end{figure}
+   \blfootcite{Colonna2022}
+\end{frame}
+
+\begin{frame}{Koopmans functionals: results for molecules}
+   \small
+   Ionisation potentials $ = E(N-1) - E(N) \stackrel{?}{=} -\varepsilon_{HO}$ of 100 molecules (the GW100 set) cf. CCSD(T)
+   \begin{center}
+      \includegraphics[height=0.2\textwidth]{figures/colonna_2019_gw100_ip}
+      % \onslide<2->{\includegraphics[height=0.23\textwidth]{figures/colonna_2019_gw100_deeper}}
+   \end{center}
+
+   \vspace{-3ex}
+   Ultraviolet photoemission spectra
+   \begin{center}
+      \begin{tikzpicture}
+         \node [inner sep=0pt](fig) at (0,0) {\includegraphics[height=0.35\textheight]{figures/fig_nguyen_prl_spectra.png}};
+         \draw [very thick, color=seaborn_red] (-5.35,-0.07) rectangle (5.4,1.6);
+      \end{tikzpicture}
+   \end{center}
+   \vspace{-2ex}
+
+   \blfootcite{Colonna2018,Nguyen2015}
+\end{frame}
+
+\begin{frame}{Koopmans functionals: results for molecules}
+   Electron affinities $ = E(N) - E(N+1) \stackrel{?}{=} -\varepsilon_{LU}$ of molecules cf. CCSD(T)/exp
+   \vspace{2ex}
+
+   \small
+   \begin{center}
+      For 15 of the GW100 molecules with bound LUMOs
+
+      \includegraphics[height=0.5\textheight]{figures/fig_gw100_ea_mae_mse.pdf}
+
+      \textcolor{seaborn_bg_grey_darker}{\footnotesize Linscott et al. (in prep)}
+   \end{center}
+\end{frame}
+
+\begin{frame}{Koopmans functionals: results for toy systems}
+   For Hooke's atom (two electrons in a harmonic confining potential with Coulombic repulsion)
+
+   \begin{figure}[t]
+      \begin{subfigure}{0.4\textwidth}
+         \includegraphics[width=\columnwidth]{figures/schubert_vxc.jpeg}
+      \end{subfigure}
+      \begin{subfigure}{0.4\textwidth}
+         \onslide<2->{
+         \includegraphics[width=\columnwidth]{figures/schubert_vxc_integrated.jpeg}
+         }
+      \end{subfigure}
+   \end{figure}
+
+   \blfootcite{Schubert2023}
+\end{frame}
+\backupend
 \end{document}
