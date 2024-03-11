@@ -358,7 +358,7 @@
 \setbeamercolor{background canvas}{bg=white}
 
 \begin{frame}{Accurate band structures}
-   Band structures are a pillar of electronic structure theory... but can we calculate them accurately and efficiently?
+   How can we calculate band structures accurately and efficiently?
 
    \vspace{-1ex}
 
@@ -366,7 +366,7 @@
       \begin{column}{0.5\textwidth}
          \begin{description}[<+(1)->]
             \item[DFT] qualitative failures
-            \item[GW] accurate but expensive, ill-behaved, and not a functional
+            \item[GW] accurate but more expensive; diagrammatic
             \item[Koopmans functionals] accurate band structures within a functional theory
          \end{description}
          \onslide<5->{
@@ -412,20 +412,20 @@
    \end{align*}
    General features:
    \begin{itemize}[<+(1)->]
-      \item a correction to DFT that enforces a generalized piecewise linearity condition (eigenvalues should match total energy differences)
+      \item a correction to DFT that ensures eigenvalues match total energy differences
       \item is orbital-density-dependent
-      \item relies on localization
-      \item requires the ab initio calculation of screening parameters
+      \item requires screening parameters to be calculated
    \end{itemize}
 
    \onslide<5->{
       In order to evaluate this functional, one must...
    }
-   \begin{itemize}[<+(6)->]
-      \item initialize a set of variational orbitals
+   \begin{enumerate}[<+(2)->]
+      \item perform a Wannierization
       \item calculate the screening parameters $\{\alpha_i\}$
-      \item construct and diagonalize the Hamiltonian
-   \end{itemize}
+      \item minimize the functional
+      \item diagonalize the Hamiltonian
+   \end{enumerate}
 
 \end{frame}
 
@@ -499,8 +499,8 @@
          \only<1>{$\square$}%
          \only<2->{%
             \rlap{$\square$}{\raisebox{2pt}{\large\hspace{1pt}\ding{51}}}%
-            \hspace{-2.5pt}}
-         automated start-to-finish calculations
+            \hspace{-1.5pt}}%
+         \ automated start-to-finish calculations
 
          \vspace{1ex}
          \ $\square$ minimal input required from the user
@@ -512,21 +512,22 @@
 
    \begin{columns}
       \begin{column}{0.5\textwidth}
-         \begin{overlayarea}{\columnwidth}{0.6\paperheight}
-         \begin{center}
-            \only<1-3>{\includegraphics[height=0.6\paperheight]{figures/proj_disentanglement_fig1a.png}}
-            \only<4>{\includegraphics[width=\columnwidth]{figures/target_manifolds_fig1b.png}}
-         \end{center}
-         \end{overlayarea}
-      \end{column}
-      \begin{column}{0.5\textwidth}
          Can we automate the Wannierization?
 
          \begin{itemize}[<+(1)->]
-            \item PAOs from the pseudopotentials as the initial guess for the projectors
+            \item use PAOs from the pseudopotential files as the initial guess for the projectors
             \item projectability-based disentanglement instead of energy-based disentanglement
-            \item a parallel transport algorithm is used to separate the occupied and empty manifolds
+            \item use a parallel transport algorithm to separate the occupied and empty manifolds
          \end{itemize}
+      \end{column}
+      \begin{column}{0.5\textwidth}
+         \begin{overlayarea}{\columnwidth}{0.6\paperheight}
+            \begin{center}
+               \only<2>{\includegraphics[width=0.8\columnwidth]{figures/plot_paos/old_projs.png}}
+               \only<3>{\includegraphics[height=0.6\paperheight]{figures/proj_disentanglement_fig1a.png}}
+               \only<4>{\includegraphics[width=\columnwidth]{figures/target_manifolds_fig1b.png}}
+            \end{center}
+         \end{overlayarea}
       \end{column}
    \end{columns}
    % \begin{figure}[t]
@@ -560,101 +561,84 @@
 
 \begin{frame}{Automating Wannierization}
    \begin{columns}
+      \begin{column}{0.4\textwidth}
+         \includegraphics[width=\columnwidth]{figures/vconf_tests/Si/confined_projectors/10_2.0_2.0/51688_wannierization_wannierize_bandstructure.png}
+      \end{column}
       \begin{column}{0.6\textwidth}
-         \inputminted[fontsize=\scriptsize]{json}{scripts/si.json}
+         \onslide<2->{
+            \inputminted[fontsize=\scriptsize]{json}{scripts/si.json}
+         }
       \end{column}
       % \hbox{
       %    \raisebox{0.15\textwidth}{\huge $\rightarrow$}
       % }
-      \begin{column}{0.4\textwidth}
-         \onslide<2->{
-         \includegraphics[width=\columnwidth]{figures/vconf_tests/Si/confined_projectors/10_2.0_2.0/51688_wannierization_wannierize_bandstructure.png}
-         }
-      \end{column}
    \end{columns}
 \end{frame}
 
 \begin{frame}{Automating Wannierization}
 
-   Note that pseudoatomic orbitals play a dual purpose
-   \begin{itemize}
-      \item we use them to calculate projectability
-      \item they serve as our initial guesses for the Wannier functions \onslide<2->{$\rightarrow$ the number of Wannier functions is limited to the number of pseudoatomic orbitals}
-   \end{itemize}
+   A drawback: the number of Wannier functions is determined by the number of PAOs in the pseudopotentials\onslide<2->{... which can be a problem e.g. LiF}
 
-   \onslide<3->{This is a problem for some systems e.g. LiF}
+   \begin{columns}
+      \begin{column}{0.5\textwidth}
+         \onslide<3->{
 
-   \onslide<4->{
+            \begin{center}
+               \footnotesize
+               \begin{tabular}[h]{ccc}
+                  element & configuration                                                                                             & {PAOs}                                                              \\
+                  \hline
+                  Li      & 1s\textsuperscript{2} 2s\textsuperscript{1}                                                               & {1s, 2s}                                                            \\
+                  {F}     & {\textcolor{seaborn_bg_grey_darker}{[1s\textsuperscript{2}]} 2s\textsuperscript{2} 2p\textsuperscript{5}} & {2s, 2p\textsubscript{x}, 2p\textsubscript{y}, 2p\textsubscript{z}} \\
+               \end{tabular}
+            \end{center}
+         }
+         \vspace{1ex}
+         \onslide<5->{If we want a better representation of the conduction bands, we're gonna need \sout{a bigger boat} more PAOs...}
+      \end{column}
+      \begin{column}{0.5\textwidth}
+         \vspace{1ex}
+         \onslide<4->{\includegraphics[width=\textwidth]{figures/LiF_bandstructures/default.png}}
 
-      \begin{center}
-         \begin{tabular}[h]{cccc}
-            element         & electronic configuration                                                                                              & {PAOs}                                                              & {number of PAOs} \\
-            \hline
-            Li              & 1s\textsuperscript{2} 2s\textsuperscript{1}                                                                           & {1s, 2s}                                                            & {2}              \\
-            {F} & {\textcolor{seaborn_bg_grey_darker}{[1s\textsuperscript{2}]} 2s\textsuperscript{2} 2p\textsuperscript{5}} & {2s, 2p\textsubscript{x}, 2p\textsubscript{y}, 2p\textsubscript{z}} & {4}
-         \end{tabular}
-      \end{center}
-   }
+      \end{column}
+   \end{columns}
 
-   \vspace{1ex}
-   \onslide<5->{6 Wannier functions for a system with 5 occupied bands}
-
-   \vspace{1ex}
-   \onslide<6->{If we want more Wannier functions, we're gonna need \sout{a bigger boat} more PAOs...}
 
 \end{frame}
 
 \begin{frame}{Automating Wannierization}
 
-   For cases such as LiF, we\dots
-   
-   re-solve the radial Schrödinger equation for additional pseudoatomic orbitals. A fictious confining potential is required to localise the empty 
+   \vspace{-2ex}
+   \begin{center}
+      \includegraphics[width=0.3\textwidth]{figures/plot_paos/old_projs.png}
+      \raisebox{0.15\textwidth}{\huge $\rightarrow$}
+      \includegraphics[width=0.3\textwidth]{figures/plot_paos/new_projs.png}
+   \end{center}
 
-   Note that this does not add complexity to the user as it only needs to be performed once per pseudopotential
+   \vspace{-2ex}
+   For cases such as LiF:
+
+   \begin{itemize}[<+->]
+      \item re-solve the radial Schrödinger equation for higher subshells
+      \item apply a confining potential while doing so
+      \item optimize the confining potential to maximise projectability
+      \item N.B. only once per pseudopotential
+   \end{itemize}
+
 
 \end{frame}
 
-% \begin{frame}{Automating Wannierization}
-%    Existing strategy: use the PAOs provided by OpenMX
-% 
-%    \includegraphics[width=0.45\textwidth]{figures/Li8.0.pao_2_2_1_0.png}
-%    \includegraphics[width=0.45\textwidth]{figures/Li8.0.pao_10_0_0_0.png}
-% 
-% \end{frame}
-
-
-% \begin{frame}{Silicon}
-%    \begin{center}
-%       \includegraphics[width=0.6\textwidth]{figures/vconf_tests/Si/projectability.png}
-%    \end{center}
-% \end{frame}
-% 
-% \begin{frame}{Silicon}
-%    \begin{center}
-%       \includegraphics[width=0.6\textwidth]{figures/vconf_tests/Si/projectability_scores_and_nsteps.png}
-%    \end{center}
-% \end{frame}
-% \begin{frame}{LiF}
-%    \begin{center}
-%       \includegraphics[width=0.6\textwidth]{figures/vconf_tests/LiF/projectability.png}
-%    \end{center}
-% \end{frame}
-% 
-% \begin{frame}{LiF}
-%    \begin{center}
-%       \includegraphics[width=0.9\textwidth]{figures/vconf_tests/LiF/projectability_scores_nsteps_and_metric.png}
-%    \end{center}
-% \end{frame}
-% 
-% \begin{frame}{Si}
-%    \begin{center}
-%       \hbox{
-%          \includegraphics[width=0.45\textwidth]{figures/vconf_tests/LiF/default/62361_wannierization_wannierize_bandstructure.png}
-%          \raisebox{0.15\textwidth}{\huge $\rightarrow$}
-%          \includegraphics[width=0.45\textwidth]{figures/vconf_tests/LiF/confined_projectors/Li_only/62361_wannierization_wannierize_bandstructure.png}
-%       }
-%    \end{center}
-% \end{frame}
+\begin{frame}{Automating Wannierization}
+   \begin{center}
+      \hbox{
+         \includegraphics[width=0.45\textwidth]{figures/LiF_bandstructures/default.png}
+         \onslide<2->{
+         \raisebox{0.15\textwidth}{\huge $\rightarrow$}
+         \includegraphics[width=0.45\textwidth]{figures/LiF_bandstructures/Li_only.png}
+         }
+      }
+   \end{center}
+\end{frame}
 % 
 % \begin{frame}{Next steps...}
 %    \begin{itemize}[<+(1)->]
@@ -696,20 +680,25 @@
          \includegraphics[width=\columnwidth]{figures/black_box_filled_square.png}
       \end{column}
       \begin{column}{0.5\textwidth}
-         For a black box, we need...
+
+         Koopmans functionals can accurately and efficiently predict the band structure of materials
 
          \vspace{1ex}
-         \
-         \rlap{$\square$}{\raisebox{2pt}{\large\hspace{1pt}\ding{51}}}%
-         \hspace{-2.5pt}
-         automated start-to-finish calculations
+         To make these calculations black box, we have...
 
          \vspace{1ex}
          \ \only<1>{$\square$}%
          \only<2->{%
             \rlap{$\square$}{\raisebox{2pt}{\large\hspace{1pt}\ding{51}}}%
-            \hspace{-2.5pt}}
-         minimal input required from the user
+            \hspace{-1.5pt}}%
+         \ automated start-to-finish calculations \onslide<2->{\emph{with the \texttt{koopmans} package}}
+
+         \vspace{1ex}
+         \ \only<1-2>{$\square$}%
+         \only<3->{%
+            \rlap{$\square$}{\raisebox{2pt}{\large\hspace{1pt}\ding{51}}}%
+            \hspace{-1.5pt}}%
+         \ minimal input required from the user \onslide<3>{emph{enabled via automated Wannierization}}
       \end{column}
    \end{columns}
 \end{frame}
@@ -722,7 +711,7 @@
       \begin{tabularx}{0.7\textwidth}{CCC}
          \includegraphics[height = 0.3\paperheight]{figures/nicola_marzari.jpg}  &
          \includegraphics[height = 0.3\paperheight]{figures/nicola_colonna2.png} &
-         \includegraphics[height = 0.3\paperheight]{photos/junfeng.jpeg} \\
+         \includegraphics[height = 0.3\paperheight]{photos/junfeng.jpeg}           \\
          % \includegraphics[height = 0.2\paperheight]{figures/daniel_cole.jpeg}       &
          % \includegraphics[height = 0.2\paperheight]{figures/mike_payne.jpeg}        &
          % \includegraphics[height = 0.2\paperheight]{figures/david_oregan.jpg}         \\
@@ -953,6 +942,14 @@
    \end{equation*}
 
    where $\mathcal{S}_\mathbf{k}$ corresponds to the $N_w$-largest values of $p_{m\mathbf{k}}$.
+
 \end{frame}
+
+\begin{frame}{Bayesian optimisation}
+   \begin{center}
+      \includegraphics[height=0.7\paperheight]{figures/Li_bayesian_opt.png}
+   \end{center}
+\end{frame}
+
 \backupend
 \end{document}
