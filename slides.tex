@@ -421,7 +421,7 @@
       In order to evaluate this functional, one must...
    }
    \begin{enumerate}[<+(2)->]
-      \item perform a Wannierization
+      \item perform a Wannierisation
       \item calculate the screening parameters $\{\alpha_i\}$
       \item minimize the functional
       \item diagonalize the Hamiltonian
@@ -462,7 +462,7 @@
             \item automated workflows
                   \begin{itemize}
                      \item Koopmans calculations
-                     \item Wannierization
+                     \item Wannierisation
                      \item dielectric tensor
                      \item ...
                   \end{itemize}
@@ -508,14 +508,16 @@
    \end{columns}
 \end{frame}
 % 
-\begin{frame}{Automating Wannierization}
+\begin{frame}{Automating Wannierisation}
 
    \begin{columns}
       \begin{column}{0.5\textwidth}
-         Can we automate the Wannierization?
+         One step still very manual: Wannierisation
+
+         Can we automate it?
 
          \begin{itemize}[<+(1)->]
-            \item use PAOs from the pseudopotential files as the initial guess for the projectors
+            \item use PAOs found in pseudopotential files as initial guesses for Wannier functions
             \item projectability-based disentanglement instead of energy-based disentanglement
             \item use a parallel transport algorithm to separate the occupied and empty manifolds
          \end{itemize}
@@ -559,10 +561,10 @@
 
 \end{frame}
 
-\begin{frame}{Automating Wannierization}
+\begin{frame}{Automating Wannierisation}
    \begin{columns}
       \begin{column}{0.4\textwidth}
-         \includegraphics[width=\columnwidth]{figures/vconf_tests/Si/confined_projectors/10_2.0_2.0/51688_wannierization_wannierize_bandstructure.png}
+         \includegraphics[width=\columnwidth]{figures/vconf_tests/Si/default/51688_wannierization_wannierize_bandstructure.png}
       \end{column}
       \begin{column}{0.6\textwidth}
          \onslide<2->{
@@ -575,7 +577,7 @@
    \end{columns}
 \end{frame}
 
-\begin{frame}{Automating Wannierization}
+\begin{frame}{Automating Wannierisation}
 
    A drawback: the number of Wannier functions is determined by the number of PAOs in the pseudopotentials\onslide<2->{... which can be a problem e.g. LiF}
 
@@ -606,7 +608,7 @@
 
 \end{frame}
 
-\begin{frame}{Automating Wannierization}
+\begin{frame}{Automating Wannierisation}
 
    \vspace{-2ex}
    \begin{center}
@@ -628,7 +630,7 @@
 
 \end{frame}
 
-\begin{frame}{Automating Wannierization}
+\begin{frame}{Automating Wannierisation}
    \begin{center}
       \hbox{
          \includegraphics[width=0.45\textwidth]{figures/LiF_bandstructures/default.png}
@@ -698,7 +700,7 @@
          \only<3->{%
             \rlap{$\square$}{\raisebox{2pt}{\large\hspace{1pt}\ding{51}}}%
             \hspace{-1.5pt}}%
-         \ minimal input required from the user \onslide<3>{emph{enabled via automated Wannierization}}
+         \ minimal input required from the user \onslide<3>{\emph{enabled via automated Wannierisation}}
       \end{column}
    \end{columns}
 \end{frame}
