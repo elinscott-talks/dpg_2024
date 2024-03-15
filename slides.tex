@@ -324,6 +324,10 @@
       \vspace{0.5em}
       \normalsize
       \insertauthor
+
+      \vspace{0.25em}
+      \scriptsize
+      \insertinstitute
       
       \vfill
     \end{column}
@@ -344,7 +348,7 @@
 
 % Title slide %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \author{Edward Linscott}
-\institute{PSI}
+\institute{Laboratory for Materials Simulations\\Paul Scherrer Institute}
 \date{21 March 2024}
 \title{Black-box, accurate, and efficient prediction of band structures with Koopmans functionals}
 % \subtitle{or: getting lost down a pseudopotential-generation rabbit hole}
@@ -358,16 +362,16 @@
 \setbeamercolor{background canvas}{bg=white}
 
 \begin{frame}{Accurate band structures}
-   How can we calculate band structures accurately and efficiently?
+   How can we calculate charged excitations (i.e. band structures, photoemission) accurately and efficiently?
 
    \vspace{-1ex}
 
    \begin{columns}
       \begin{column}{0.5\textwidth}
          \begin{description}[<+(1)->]
-            \item[DFT] qualitative failures
+            \item[DFT] intrinsic failure
             \item[GW] accurate but more expensive; diagrammatic
-            \item[Koopmans functionals] accurate band structures within a functional theory
+            \item[Koopmans] accurate band structures with a functional theory
          \end{description}
          \onslide<5->{
             \vspace{1ex}
@@ -413,8 +417,8 @@
    General features:
    \begin{itemize}[<+(1)->]
       \item a correction to DFT that ensures eigenvalues match total energy differences
-      \item is orbital-density-dependent
-      \item requires screening parameters to be calculated
+      \item is orbital-density-dependent (gives rise to, and is reliant on, a localised set of orbitals)
+      \item requires screening parameters $\alpha_i$ to be calculated
    \end{itemize}
 
    \onslide<5->{
@@ -557,18 +561,20 @@
    %    \end{subfigure}
    % \end{figure}
 
+   \blfootcite{Agapito2013}
    \blfootcite{Qiao2023,Qiao2023a}
 
 \end{frame}
 
 \begin{frame}{Automating Wannierisation}
+   \vspace{-2ex}
    \begin{columns}
-      \begin{column}{0.4\textwidth}
-         \includegraphics[width=\columnwidth]{figures/vconf_tests/Si/default/51688_wannierization_wannierize_bandstructure.png}
+      \begin{column}{0.5\textwidth}
+         \includegraphics[width=\columnwidth]{figures/TiO2_wannierize_bandstructure.png}
       \end{column}
-      \begin{column}{0.6\textwidth}
+      \begin{column}{0.5\textwidth}
          \onslide<2->{
-            \inputminted[fontsize=\scriptsize]{json}{scripts/si.json}
+            \inputminted[fontsize=\tiny]{json}{scripts/TiO2.json}
          }
       \end{column}
       % \hbox{
@@ -603,8 +609,8 @@
          \onslide<4->{\includegraphics[width=\textwidth]{figures/LiF_bandstructures/default.png}}
 
       \end{column}
-   \end{columns}
 
+   \end{columns}
 
 \end{frame}
 
@@ -639,7 +645,23 @@
          \includegraphics[width=0.45\textwidth]{figures/LiF_bandstructures/Li_only.png}
          }
       }
+
+      \onslide<3->{
+      \begin{tabular}{c *{6}{d{2.2}}}
+         & \multicolumn{1}{c}{LDA}
+         & \multicolumn{1}{c}{HSE}
+         & \multicolumn{1}{c}{GW\textsubscript{0}}
+         & \multicolumn{1}{c}{scG$\tilde{\mathsf{W}}$}
+         & \multicolumn{1}{c}{KI}
+         & \multicolumn{1}{c}{exp} \\
+         \hline
+         $E_\mathsf{gap}$ (eV) & 8.87 & 11.61 & 13.96 & 14.5 & 15.28 & 15.35
+      \end{tabular}
+      \blfootcite{Colonna2022}
+      }
    \end{center}
+
+
 \end{frame}
 % 
 % \begin{frame}{Next steps...}
@@ -763,6 +785,47 @@
    \begin{center}
       \huge SPARE SLIDES
    \end{center}
+
+\end{frame}
+
+\begin{frame}{Localised states}
+   Consequences of ODD:
+   \begin{itemize}[<+(1)->]
+      \item variational (localized, minimizing) vs canonical (delocalized, diagonalizing) orbitals
+            \begin{figure}[t]
+               \centering
+               \begin{subfigure}{0.3\textwidth}
+                  \includegraphics[height=\columnwidth,angle=90]{figures/fig_nguyen_variational_orbital.png}
+                  \caption{variational}
+               \end{subfigure}
+               \hspace{0.1\textwidth}
+               \begin{subfigure}{0.3\textwidth}
+                  \includegraphics[height=\columnwidth,angle=90]{figures/fig_nguyen_canonical_orbital.png}
+                  \caption{canonical}
+               \end{subfigure}
+            \end{figure}
+      \item Practically we can often use MLWFs
+      \item localized variational orbitals naturally allow us to treat bulk systems
+      % \item ODD functional means that we know $\hat H \ket{\varphi_i}$ for variational orbitals $\{\ket{\varphi_i}\}$ but we don't know $\hat H$ in general
+   \end{itemize}
+   \blfootcite{Nguyen2018}
+\end{frame}
+
+\begin{frame}{Localised states}
+
+   \begin{center}
+      \includegraphics[width=0.8\textwidth]{figures/fig_nguyen_scaling.png}
+   \end{center}
+   \onslide<2->{
+      \noindent In the bulk limit for one cell $\Delta E_\text{one cell} = E(N-\delta N) - E(N)$
+   }%
+
+   \onslide<3>{ 
+      Across all the cells $
+         \Delta E_\text{all cells} = \frac{1}{\delta N}\left(E(N-\delta N) - E(N)\right) = -\frac{dE}{dN} = -\varepsilon_\mathsf{HO}$
+   }%
+
+   \blfootcite{Nguyen2018}
 
 \end{frame}
 
