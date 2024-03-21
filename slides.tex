@@ -405,21 +405,20 @@
 
 \begin{frame}{Features of Koopmans functionals}
    \begin{align*}
-      E_\mathsf{Koopmans}[\rho,{\{f_i\}}, {\{\alpha_i\}}]
-      = {E_{DFT}[\rho]}
+      E_\mathsf{KI}[\rho,\only<3>{\textcolor{red}}{\{\rho_i\}}, \only<4>{\textcolor{red}}{\{\alpha_i\}}]
+      = \only<2>{\textcolor{red}}{E_\mathsf{DFT}[\rho]}
       + \sum_i
+      \only<4>{\textcolor{red}}
       {\alpha_i}
-      \Biggl(
-      -
-      {\int^{f_i}_{0} \varepsilon_i(f) df}
-      +
-      {f_i {\eta_i}}
-      \Biggr)
+      \biggl(&
+      E_\mathsf{Hxc} [\rho-\only<3>{\textcolor{red}}{\rho_i}] -E_\mathsf{Hxc}[\rho] \nonumber \\
+      & \qquad + f_i \left( E_\mathsf{Hxc}[\rho-\only<3>{\textcolor{red}}{\rho_i}+\only<3>{\textcolor{red}}{n_i}] -E_\mathsf{Hxc}[\rho-\only<3>{\textcolor{red}}{\rho_i}] \right)
+      \biggr)
    \end{align*}
    General features:
    \begin{itemize}[<+(1)->]
       \item a correction to DFT that ensures eigenvalues match total energy differences
-      \item is orbital-density-dependent (gives rise to, and is reliant on, a localised set of orbitals)
+      \item is orbital-density-dependent $\rightarrow$ localised orbitals
       \item requires screening parameters $\alpha_i$ to be calculated
    \end{itemize}
 
@@ -788,6 +787,48 @@
       \huge SPARE SLIDES
    \end{center}
 
+\end{frame}
+
+\begin{frame}{Generalised piecewise linearity}
+   \hbox{
+      \begin{minipage}{0.5\textwidth}
+            Core idea: for every orbital $i$ their energy
+            \begin{equation*}
+               \varepsilon^\mathsf{Koopmans}_i = \braopket{\varphi_i}{H}{\varphi_i} = \partial E_\mathsf{Koopmans}/\partial f_i
+            \end{equation*}
+            ought to be...
+            \begin{itemize}
+               \item independent of its own occupation $f_i$
+               \item equal to the corresponding total energy difference $E_i(N-1) - E(N)$
+            \end{itemize}
+         %
+      \end{minipage}
+
+      \begin{minipage}{0.45\textwidth}
+         \centering
+         \only<1>{
+            \includegraphics[width=\columnwidth]{figures/curvature_plot/fig_en_curve_gradients_zoom.pdf}
+         }
+         % \only<2>{
+         %    \includegraphics[height=0.6\textheight]{figures/fig_gw100_dscf_cf_ks.png}
+         % }
+      \end{minipage}
+   }
+\end{frame}
+
+\begin{frame}{Integral form of a Koopmans correction}
+   \begin{align*}
+      E_\mathsf{Koopmans}[\rho,{\{f_i\}}, {\{\alpha_i\}}]
+      = {E_{DFT}[\rho]}
+      + \sum_i
+      {\alpha_i}
+      \Biggl(
+      -
+      {\int^{f_i}_{0} \varepsilon_i(f) df}
+      +
+      {f_i {\eta_i}}
+      \Biggr)
+   \end{align*}
 \end{frame}
 
 \begin{frame}{Localised states}
